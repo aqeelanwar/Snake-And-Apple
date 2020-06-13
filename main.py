@@ -21,6 +21,9 @@ RED_COLOR = "#EE4035"
 BLUE_COLOR = "#0492CF"
 Green_color = "#7BC043"
 
+BLUE_COLOR_LIGHT = '#67B0CF'
+RED_COLOR_LIGHT = '#EE7E77'
+
 
 class SnakeAndApple:
     # ------------------------------------------------------------------
@@ -143,7 +146,7 @@ class SnakeAndApple:
         x2 = x1 + row_h
         y2 = y1 + col_w
         self.apple_obj = self.canvas.create_rectangle(
-            x1, y1, x2, y2, fill=RED_COLOR, outline=BLUE_COLOR,
+            x1, y1, x2, y2, fill=RED_COLOR_LIGHT, outline=BLUE_COLOR,
         )
 
     def display_snake(self, mode=""):
