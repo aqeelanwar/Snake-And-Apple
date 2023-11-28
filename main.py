@@ -51,12 +51,18 @@ class SnakeAndApple:
 
         for i in range(rows):
             self.canvas.create_line(
-                i * size_of_board / rows, 0, i * size_of_board / rows, size_of_board,
+                i * size_of_board / rows, 
+                0, 
+                i * size_of_board / rows, 
+                size_of_board,
             )
 
         for i in range(cols):
             self.canvas.create_line(
-                0, i * size_of_board / cols, size_of_board, i * size_of_board / cols,
+                0, 
+                i * size_of_board / cols, 
+                size_of_board, 
+                i * size_of_board / cols,
             )
 
     def initialize_snake(self):
@@ -64,11 +70,12 @@ class SnakeAndApple:
         self.crashed = False
         self.snake_heading = "Right"
         self.last_key = self.snake_heading
-        self.forbidden_actions = {}
-        self.forbidden_actions["Right"] = "Left"
-        self.forbidden_actions["Left"] = "Right"
-        self.forbidden_actions["Up"] = "Down"
-        self.forbidden_actions["Down"] = "Up"
+        self.forbidden_actions = {
+            "Right": "Left",
+            "Left": "Right",
+            "Up": "Down",
+            "Down": "Up"
+        }        
         self.snake_objects = []
         for i in range(snake_initial_length):
             self.snake.append((i, 0))
@@ -207,6 +214,7 @@ class SnakeAndApple:
         # Check if it hit the wall or its own body
         tail = self.snake[0]
         head = self.snake[-1]
+        
         if tail != self.old_apple_cell:
             self.snake.pop(0)
         if key == "Left":
@@ -238,9 +246,8 @@ class SnakeAndApple:
             self.snake_heading = key
             self.display_snake()
 
-    def check_if_key_valid(self, key):
-        valid_keys = ["Up", "Down", "Left", "Right"]
-        if key in valid_keys and self.forbidden_actions[self.snake_heading] != key:
+    def check_if_key_valid(self, key):        
+        if key in self.forbidden_actions.keys() and self.forbidden_actions[self.snake_heading] != key:
             return True
         else:
             return False
@@ -258,5 +265,10 @@ class SnakeAndApple:
                 self.last_key = key_pressed
 
 
-game_instance = SnakeAndApple()
-game_instance.mainloop()
+
+# Initialize the program when calling it directly without using global scope
+@lambda Main: Main() if __name__ in "__main__" else None
+def main():
+    # @pedroGoffi: Since the variable wasn't being used we just call whe function
+    # the object will not be deallocated untill mainloop continues working
+    SnakeAndApple().mainloop()
